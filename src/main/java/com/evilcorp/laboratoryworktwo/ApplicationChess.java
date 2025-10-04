@@ -22,6 +22,5 @@ public class ApplicationChess extends Application {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 }

@@ -30,20 +30,19 @@ public class Controller {
         comboBox.setItems(algorithmTypes);
     }
 
-    private void initChessBoard() {
-
-    }
-
     @FXML
     private void MouseClickedInImageView (MouseEvent event) {
         ImageView view = (ImageView) event.getPickResult().getIntersectedNode();
-        view.setImage(ChessPiece.QUEEN.getImage());
+        if (null == view.getImage()) {
+            view.setImage(ChessPiece.QUEEN.getImage());
+            return;
+        }
+        view.setImage(null);
     }
 
     @FXML
     private void onButtonClick() {
         AlgorithmType selectedAlgorithm = comboBox.getValue();
-        if (selectedAlgorithm != null) {
             switch (selectedAlgorithm) {
                 case ASTAR:
                     System.out.println("A* algorithm selected");
@@ -54,7 +53,6 @@ public class Controller {
                 default:
                     throw new IllegalStateException("Unexpected value: " + selectedAlgorithm);
             }
-        }
     }
 
 }
