@@ -1,0 +1,13 @@
+.HBox {
+    -fx-padding: 15px 5px;
+    -fx-alignment: center;
+    -fx-spacing: 150px;
+    -fx-background-color: #EBCA9F;
+}
+
+.GridPanel {
+    -fx-padding: 41px 42px 42px 36px;
+    -fx-background-image: url("../img/chessboard.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 50% 50%;
+}
