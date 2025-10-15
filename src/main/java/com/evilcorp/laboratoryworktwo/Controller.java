@@ -41,10 +41,8 @@ public class Controller {
     @FXML
     private void MouseClickedInImageView (MouseEvent event) {
         Node node =  event.getPickResult().getIntersectedNode();
-
         Integer rowIndex = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
         Integer colIndex = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
-
         int row = (rowIndex == null) ? 0 : rowIndex;
         int col = (colIndex == null) ? 0 : colIndex;
 
@@ -67,7 +65,8 @@ public class Controller {
         AlgorithmType selectedAlgorithm = comboBox.getValue();
             switch (selectedAlgorithm) {
                 case ASTAR:
-                    System.out.println("A* algorithm selected");
+                    List<Integer> board = List.of(0, 1, 2, 3, 4, 5, 6, 7);
+                    placeQueens(board);
                     break;
                 case ANNEAL:
                     System.out.println("Simulated Annealing algorithm selected");
@@ -76,4 +75,33 @@ public class Controller {
                     throw new IllegalStateException("Unexpected value: " + selectedAlgorithm);
             }
     }
+
+    private void placeQueens(List<Integer> board) {
+        ObservableList<Node> nodes = chessBoard.getChildren();
+        int n = board.size();
+        for (Node node : nodes) {
+            if (node instanceof ImageView img) {
+                img.setImage(null);
+            }
+        }
+        for (int row = 0; row < n; row++) {
+            int col = board.get(row);
+            Node cell = getNodeByRowColumn(row, col, chessBoard);
+            if (cell instanceof ImageView img) {
+                img.setImage(ChessPiece.QUEEN.getImage());
+            }
+        }
+    }
+
+    private Node getNodeByRowColumn(int row, int col, GridPane grid) {
+        for (Node node : grid.getChildren()) {
+            Integer r = GridPane.getRowIndex(node);
+            Integer c = GridPane.getColumnIndex(node);
+            if (r == null) r = 0;
+            if (c == null) c = 0;
+            if (r == row && c == col) return node;
+        }
+        return null;
+    }
+
 }
