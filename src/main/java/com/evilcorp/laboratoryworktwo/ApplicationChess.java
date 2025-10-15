@@ -10,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 
 public class ApplicationChess extends Application {
     private Scene scene;
-
     @Override
     public void start(Stage stage) throws Exception {
         try {

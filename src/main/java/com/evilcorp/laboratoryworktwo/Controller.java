@@ -1,11 +1,15 @@
 package com.evilcorp.laboratoryworktwo;
 
+import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.evilcorp.laboratoryworktwo.Enum.ChessPiece;
@@ -19,9 +23,13 @@ public class Controller {
     @FXML
     private GridPane chessBoard;
 
+    private int count;
+    private List<Integer> board;
+
     @FXML
     public void initialize() {
         InitComboBox();
+        board = new ArrayList<>(Collections.nCopies(8, -1));
     }
 
     private void InitComboBox() {
@@ -32,12 +40,26 @@ public class Controller {
 
     @FXML
     private void MouseClickedInImageView (MouseEvent event) {
-        ImageView view = (ImageView) event.getPickResult().getIntersectedNode();
-        if (null == view.getImage()) {
+        Node node =  event.getPickResult().getIntersectedNode();
+
+        Integer rowIndex = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
+        Integer colIndex = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
+
+        int row = (rowIndex == null) ? 0 : rowIndex;
+        int col = (colIndex == null) ? 0 : colIndex;
+
+        ImageView view = (ImageView) node;
+        if (null == view.getImage() && count <= 7 && board.get(col) == -1) {
+            count++;
+            board.set(col, row);
+            System.out.println(board);
             view.setImage(ChessPiece.QUEEN.getImage());
-            return;
+        } else if (null != view.getImage()) {
+            count--;
+            board.set(col, -1);
+            System.out.println(board);
+            view.setImage(null);
         }
-        view.setImage(null);
     }
 
     @FXML
@@ -54,5 +76,4 @@ public class Controller {
                     throw new IllegalStateException("Unexpected value: " + selectedAlgorithm);
             }
     }
-
 }
