@@ -32,16 +32,4 @@ public abstract class BaseState {
     public boolean isGoal() {
         return attackingPairs() == 0;
     }
-
-    public static void printBoard(BaseState state) {
-        List<Integer> board = state.getBoard();
-        int n = board.size();
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < n; col++) {
-                System.out.print(board.get(col) == row ? queenSymbol + " " : ". ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 }

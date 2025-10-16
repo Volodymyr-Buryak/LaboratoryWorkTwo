@@ -3,6 +3,7 @@ package com.evilcorp.laboratoryworktwo;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.control.Button;
@@ -13,18 +14,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.evilcorp.laboratoryworktwo.Enum.ChessPiece;
+import com.evilcorp.laboratoryworktwo.classes.AStarState;
 import com.evilcorp.laboratoryworktwo.Enum.AlgorithmType;
+import com.evilcorp.laboratoryworktwo.algorithms.AStarSolver;
+import com.evilcorp.laboratoryworktwo.classes.AnnealingState;
+import com.evilcorp.laboratoryworktwo.algorithms.SimulatedAnnealing;
 
 public class Controller {
+    private int count;
+    private List<Integer> board;
+
     @FXML
     private Button button;
     @FXML
-    private ComboBox<AlgorithmType> comboBox;
-    @FXML
     private GridPane chessBoard;
-
-    private int count;
-    private List<Integer> board;
+    @FXML
+    private ComboBox<AlgorithmType> comboBox;
 
     @FXML
     public void initialize() {
@@ -63,17 +68,28 @@ public class Controller {
     @FXML
     private void onButtonClick() {
         AlgorithmType selectedAlgorithm = comboBox.getValue();
+        if (selectedAlgorithm != null && count == 8) {
             switch (selectedAlgorithm) {
-                case ASTAR:
-                    List<Integer> board = List.of(0, 1, 2, 3, 4, 5, 6, 7);
+                case ASTAR: {
+                    System.out.println("A* algorithm selected");
+                    AStarState aStarResult =
+                            Objects.requireNonNull(AStarSolver.solve(new AStarState(board)));
+                    board = aStarResult.getBoard();
                     placeQueens(board);
                     break;
-                case ANNEAL:
+                }
+                case ANNEAL: {
                     System.out.println("Simulated Annealing algorithm selected");
+                    AnnealingState annealResult =
+                            SimulatedAnnealing.solve(new AnnealingState(board));
+                    board = annealResult.getBoard();
+                    placeQueens(board);
                     break;
+                }
                 default:
                     throw new IllegalStateException("Unexpected value: " + selectedAlgorithm);
             }
+        }
     }
 
     private void placeQueens(List<Integer> board) {
@@ -103,5 +119,4 @@ public class Controller {
         }
         return null;
     }
-
 }

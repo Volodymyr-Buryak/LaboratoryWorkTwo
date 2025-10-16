@@ -14,8 +14,8 @@
    <top>
       <HBox styleClass="HBox" stylesheets="@style/application.css" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="comboBox" onAction="#onButtonClick" prefHeight="26.0" prefWidth="158.0" promptText="Algorithm options" />
-            <Button fx:id="button" mnemonicParsing="false" prefHeight="26.0" prefWidth="164.0" text="Start" />
+            <ComboBox fx:id="comboBox" prefHeight="26.0" prefWidth="158.0" promptText="Algorithm options" />
+            <Button fx:id="button" mnemonicParsing="false" onAction="#onButtonClick" prefHeight="26.0" prefWidth="164.0" text="Start" />
          </children>
       </HBox>
    </top>
