@@ -50,7 +50,6 @@ public class Controller {
         Integer colIndex = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
         int row = (rowIndex == null) ? 0 : rowIndex;
         int col = (colIndex == null) ? 0 : colIndex;
-
         ImageView view = (ImageView) node;
         if (null == view.getImage() && count <= 7 && board.get(col) == -1) {
             count++;

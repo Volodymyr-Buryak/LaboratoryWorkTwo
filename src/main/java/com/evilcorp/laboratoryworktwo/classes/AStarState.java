@@ -27,14 +27,35 @@ public class AStarState extends BaseState implements Comparable<AStarState> {
         int n = board.size();
         for (int row = 0; row < n; row++) {
             int currentCol = board.get(row);
+            int bestCol = currentCol;
+            int minConflicts = Integer.MAX_VALUE;
             for (int col = 0; col < n; col++) {
                 if (col == currentCol) continue;
+                int conflicts = countConflictsAt(row, col);
+                if (conflicts < minConflicts) {
+                    minConflicts = conflicts;
+                    bestCol = col;
+                }
+            }
+            if (bestCol != currentCol) {
                 List<Integer> newBoard = new ArrayList<>(board);
-                newBoard.set(row, col);
+                newBoard.set(row, bestCol);
                 successors.add(new AStarState(newBoard, g + 1, this));
             }
         }
         return successors;
+    }
+
+    private int countConflictsAt(int row, int newCol) {
+        int conflicts = 0;
+        for (int r = 0; r < board.size(); r++) {
+            if (r == row) continue;
+            int c = board.get(r);
+            if (c == newCol || Math.abs(r - row) == Math.abs(c - newCol)) {
+                conflicts++;
+            }
+        }
+        return conflicts;
     }
 
     @Override

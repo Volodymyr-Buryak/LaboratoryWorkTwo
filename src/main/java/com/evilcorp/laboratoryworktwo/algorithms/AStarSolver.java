@@ -24,28 +24,18 @@ public final class AStarSolver {
             }
 
             closedSet.add(current.getBoard());
-
-            // для кожної допустимої дії
             for (AStarState m : current.generateSuccessors()) {
-                // якщо m ∈ CLOSED: продовжити
                 if (closedSet.contains(m.getBoard())) {
                     continue;
                 }
 
                 int tentativeG = current.g + 1;
-
-                // якщо m ∉ OPEN або tentative_g < g(m)
                 AStarState existingState = openMap.get(m.getBoard());
 
                 if (existingState == null || tentativeG < existingState.g) {
-                    // g(m) ← tentative_g
                     m.g = tentativeG;
-                    // f(m) ← g(m) + h(m)
                     m.fun = m.g + m.h;
-                    // parent(m) ← n
                     m.parent = current;
-
-                    // якщо m ∉ OPEN: додати m у OPEN
                     if (existingState == null) {
                         openSet.add(m);
                         openMap.put(m.getBoard(), m);
@@ -60,5 +50,4 @@ public final class AStarSolver {
 
         return null;
     }
-
 }
