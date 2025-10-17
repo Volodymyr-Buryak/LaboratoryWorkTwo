@@ -1,14 +1,13 @@
 package com.evilcorp.laboratoryworktwo.algorithms;
 
+import java.util.Random;
 import com.evilcorp.laboratoryworktwo.classes.BaseState;
 import com.evilcorp.laboratoryworktwo.classes.AnnealingState;
 
-import java.util.Random;
-
 public final class SimulatedAnnealing {
     private static final int MIN_E = 0;
-    private static final double MIN_TEMPERATURE = 0.01;
-    private static final double COOLING_COEFFICIENT = 0.001;// k - змінний коефіцієнт
+    private static final double MIN_TEMPERATURE = 0.001;
+    private static final double COOLING_COEFFICIENT = 0.004;// k - змінний коефіцієнт
     private static final double INITIAL_TEMPERATURE = 1000.0;
     private static final Random rand = new Random();
 
@@ -34,7 +33,7 @@ public final class SimulatedAnnealing {
             temperature = INITIAL_TEMPERATURE - COOLING_COEFFICIENT * iteration;
             iteration++;
         }
-        System.out.println("Final energy: " + E);
+        System.out.println(E);
         return startState;
     }
 }

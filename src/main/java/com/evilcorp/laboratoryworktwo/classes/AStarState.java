@@ -25,37 +25,16 @@ public class AStarState extends BaseState implements Comparable<AStarState> {
     public List<AStarState> generateSuccessors() {
         List<AStarState> successors = new ArrayList<>();
         int n = board.size();
-        for (int row = 0; row < n; row++) {
-            int currentCol = board.get(row);
-            int bestCol = currentCol;
-            int minConflicts = Integer.MAX_VALUE;
-            for (int col = 0; col < n; col++) {
-                if (col == currentCol) continue;
-                int conflicts = countConflictsAt(row, col);
-                if (conflicts < minConflicts) {
-                    minConflicts = conflicts;
-                    bestCol = col;
-                }
-            }
-            if (bestCol != currentCol) {
+        for (int col = 0; col < n; col++) {
+            int currentRow = board.get(col);
+            for (int row = 0; row < n; row++) {
+                if (row == currentRow) continue;
                 List<Integer> newBoard = new ArrayList<>(board);
-                newBoard.set(row, bestCol);
+                newBoard.set(col, row);
                 successors.add(new AStarState(newBoard, g + 1, this));
             }
         }
         return successors;
-    }
-
-    private int countConflictsAt(int row, int newCol) {
-        int conflicts = 0;
-        for (int r = 0; r < board.size(); r++) {
-            if (r == row) continue;
-            int c = board.get(r);
-            if (c == newCol || Math.abs(r - row) == Math.abs(c - newCol)) {
-                conflicts++;
-            }
-        }
-        return conflicts;
     }
 
     @Override

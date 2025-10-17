@@ -18,20 +18,16 @@ public final class AStarSolver {
         while (!openSet.isEmpty()) {
             AStarState current = openSet.poll();
             openMap.remove(current.getBoard());
-
             if (current.isGoal()) {
                 return current;
             }
-
             closedSet.add(current.getBoard());
             for (AStarState m : current.generateSuccessors()) {
                 if (closedSet.contains(m.getBoard())) {
                     continue;
                 }
-
                 int tentativeG = current.g + 1;
                 AStarState existingState = openMap.get(m.getBoard());
-
                 if (existingState == null || tentativeG < existingState.g) {
                     m.g = tentativeG;
                     m.fun = m.g + m.h;

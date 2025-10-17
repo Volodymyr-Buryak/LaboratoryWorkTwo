@@ -13,12 +13,12 @@ public class AnnealingState extends BaseState {
 
     public AnnealingState generateSuccessor() {
         List<Integer> newBoard = new ArrayList<>(board);
-        int i = rand.nextInt(newBoard.size());
-        int newCol;
+        int col = rand.nextInt(newBoard.size());
+        int newRow;
         do {
-            newCol = rand.nextInt(newBoard.size());
-        } while (newCol == newBoard.get(i));
-        newBoard.set(i, newCol);
+            newRow = rand.nextInt(newBoard.size());
+        } while (newRow == newBoard.get(col));
+        newBoard.set(col, newRow);
         return new AnnealingState(newBoard);
     }
 }

@@ -10,14 +10,18 @@ public abstract class BaseState {
         this.board = board;
     }
 
+    // Підрахунок кількості пар ферзів, які атакують один одного (індекс — колонка, значення — рядок)
     public int attackingPairs() {
         int pairs = 0;
         int n = board.size();
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                int row1 = i, col1 = board.get(i);
-                int row2 = j, col2 = board.get(j);
-                if (col1 == col2 || Math.abs(row1 - row2) == Math.abs(col1 - col2)) {
+        for (int col1 = 0; col1 < n; col1++) {
+            int row1 = board.get(col1);
+            for (int col2 = col1 + 1; col2 < n; col2++) {
+                int row2 = board.get(col2);
+                if (row1 == row2) {
+                    pairs++;
+                }
+                if (Math.abs(col1 - col2) == Math.abs(row1 - row2)) {
                     pairs++;
                 }
             }
